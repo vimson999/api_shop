@@ -58,16 +58,16 @@
 .function-grid {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30rpx;
+  margin-bottom: 20rpx; /* 减小底部边距 */
 }
 
 .function-item {
-  width: 30%;
+  width: 32%; /* 调整宽度 */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30rpx 10rpx;
-  border-radius: 16rpx;
+  padding: 20rpx 10rpx; /* 减小内边距 */
+  border-radius: 12rpx;
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10rpx);
 }
@@ -75,13 +75,13 @@
 .function-icon {
   width: 96rpx;
   height: 96rpx;
-  border-radius: 16rpx;
-  margin-bottom: 16rpx;
+  border-radius: 12rpx;
+  margin-bottom: 12rpx; /* 减小图标底部边距 */
 }
 
 .function-title {
   font-size: 28rpx;
-  margin-bottom: 8rpx;
+  margin-bottom: 6rpx; /* 减小标题底部边距 */
 }
 
 .function-desc {
@@ -92,22 +92,22 @@
 /* 卡片通用样式 */
 .card {
   width: 100%;
-  border-radius: 16rpx;
+  border-radius: 12rpx;
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10rpx);
-  padding: 30rpx;
-  margin-bottom: 30rpx;
+  padding: 20rpx; /* 减小内边距 */
+  margin-bottom: 20rpx; /* 减小卡片之间的距离 */
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20rpx;
+  margin-bottom: 16rpx; /* 减小头部底部边距 */
 }
 
 .card-title {
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 500;
 }
 
@@ -122,7 +122,7 @@
 
 /* 公告和状态样式 */
 .notice-text, .status-text {
-  font-size: 28rpx;
+  font-size: 26rpx;
   display: flex;
   align-items: center;
 }
@@ -144,8 +144,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24rpx 0;
-  border-bottom: 2rpx solid #F3F4F6;
+  padding: 16rpx 0; /* 减小上下内边距 */
+  border-bottom: 1rpx solid #F3F4F6; /* 减小分隔线粗细 */
 }
 
 .history-item:last-child {
@@ -153,60 +153,21 @@
 }
 
 .history-title {
-  font-size: 28rpx;
-  margin-bottom: 8rpx;
+  font-size: 26rpx;
+  margin-bottom: 6rpx; /* 减小标题底部边距 */
 }
 
 .history-time {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #9CA3AF;
 }
 
 .history-points {
-  font-size: 28rpx;
+  font-size: 26rpx;
+  color: #2DD4BF;
 }
 
-/* 底部操作区 */
-.bottom-actions {
-  position: fixed;
-  bottom: 98rpx; /* 底部tabBar高度是98rpx，加上边距 */
-  left: 0;
-  width: 100%;
-  padding: 20rpx 30rpx;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 20rpx;
-}
-
-.btn {
-  flex: 1;
-  padding: 20rpx 0;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  font-weight: 500;
-  text-align: center;
-  border: none;
-}
-
-.btn-primary {
-  background-color: rgba(45, 212, 191, 0.9);
-  color: white;
-}
-
-.btn-primary::after {
-  border: none;
-}
-
-.btn-secondary {
-  background-color: rgba(100, 116, 139, 0.9);
-  color: white;
-}
-
-.btn-secondary::after {
-  border: none;
-}
+/* 底部操作区 - 已删除不需要了 */
 
 /* 图标字体 */
 @font-face {
@@ -242,7 +203,7 @@
   content: "\e64a";
 }
 
-/* 添加到index.wxss中 */
+/* 新增 - 处理禁用状态的样式 */
 .disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -250,4 +211,16 @@
 
 .gray-text {
   color: #9CA3AF;
+}
+
+/* 调整容器的样式 */
+.container {
+  padding: 0 20rpx; /* 减小左右边距 */
+}
+
+/* 积分消耗明细金额样式特殊调整 */
+.history-points.text-primary {
+  color: #2DD4BF;
+  text-align: right;
+  min-width: 80rpx; /* 确保对齐 */
 }

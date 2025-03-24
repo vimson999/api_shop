@@ -4,17 +4,25 @@ const request = require('../../utils/request.js');
 
 Page({
   data: {
-    userInfo: {},
-    points: 0,
-    keyCount: 0,
+    userInfo: {
+      nickName: '陈志强' // 固定的假用户名
+    },
+    points: 2680, // 固定的假积分余额
+    keyCount: 2, // 固定的假Key数量
     showNotice: true,
     showApiStatus: true,
     apiStatus: 'normal', // 'normal' 或 'error'
-    consumeHistory: []
+    consumeHistory: [
+      { title: '图像生成 1024x1024', time: '2024-01-20 15:30:25', points: 15 },
+      { title: '文本生成 2000字', time: '2024-01-20 15:28:12', points: 20 },
+      { title: '语音转写 5分钟', time: '2024-01-20 15:25:43', points: 25 },
+      { title: '图像生成 512x512', time: '2024-01-20 15:20:18', points: 10 },
+      { title: '文本生成 1000字', time: '2024-01-20 15:15:32', points: 10 }
+    ] // 固定的假消费记录
   },
 
   onLoad() {
-    // 检查登录状态
+    // 保留这部分代码以便后续接入真实API
     if (app.globalData.isLoggedIn) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -22,42 +30,35 @@ Page({
       });
     }
     
-    // 获取API Key数量
-    this.getKeyCount();
-    
-    // 获取消费记录
-    this.getConsumeHistory();
+    // 以下API相关代码暂时注释掉，使用假数据
+    // this.getKeyCount();
+    // this.getConsumeHistory();
   },
   
   onShow() {
-    // 页面显示时刷新数据
+    // 页面显示时刷新数据 - 暂时注释掉
+    /*
     if (app.globalData.isLoggedIn) {
       this.refreshPoints();
       this.getKeyCount();
       this.getConsumeHistory();
     }
+    */
   },
   
-  // 刷新积分
+  // 刷新积分 - 现在只是刷新假数据的动画效果
   refreshPoints() {
-    if (!app.globalData.isLoggedIn) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      });
-      return;
-    }
+    wx.showLoading({
+      title: '刷新中',
+    });
     
-    request.get('/user/points', {}, true)
-      .then(res => {
-        this.setData({
-          points: res.points
-        });
-        app.globalData.points = res.points;
-      })
-      .catch(err => {
-        console.error('获取积分失败', err);
+    setTimeout(() => {
+      wx.hideLoading();
+      wx.showToast({
+        title: '刷新成功',
+        icon: 'success'
       });
+    }, 500);
   },
   
   // 获取API Key数量
@@ -87,16 +88,6 @@ Page({
       })
       .catch(err => {
         console.error('获取消费记录失败', err);
-        // 模拟数据（实际开发中应移除）
-        this.setData({
-          consumeHistory: [
-            { title: '图像生成 1024x1024', time: '2024-01-20 15:30:25', points: 15 },
-            { title: '文本生成 2000字', time: '2024-01-20 15:28:12', points: 20 },
-            { title: '语音转写 5分钟', time: '2024-01-20 15:25:43', points: 25 },
-            { title: '图像生成 512x512', time: '2024-01-20 15:20:18', points: 10 },
-            { title: '文本生成 1000字', time: '2024-01-20 15:15:32', points: 10 }
-          ]
-        });
       });
   },
   
@@ -144,14 +135,6 @@ Page({
     });
   },
   
-// 在index.js中添加
-showComingSoon() {
-  wx.showToast({
-    title: '功能即将上线',
-    icon: 'none'
-  });
-},
-
   // 导航到API Key页面
   navigateToApiKey() {
     wx.switchTab({
@@ -159,14 +142,12 @@ showComingSoon() {
     });
   },
   
-  // 导航到文档中心
-  // 修改navigateToDoc函数为showDocComingSoon
-showDocComingSoon() {
-  wx.showToast({
-    title: '文档中心功能即将上线',
-    icon: 'none',
-    duration: 2000
-  });
-}
-
+  // 显示文档中心即将上线的提示
+  showDocComingSoon() {
+    wx.showToast({
+      title: '文档中心功能即将上线',
+      icon: 'none',
+      duration: 2000
+    });
+  }
 });
