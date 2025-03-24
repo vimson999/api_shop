@@ -1,15 +1,27 @@
-/* 导航栏样式 */
-.nav-bar {
+/* 状态栏高度 */
+.status-bar {
+  height: 40px; /* 固定高度，可根据设备调整 */
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 99;
+}
+/* 导航栏样式 */
+.nav-bar {
+  position: fixed;
+  top: 40px; /* 状态栏的高度 */
+  left: 0;
   width: 100%;
-  padding: 20rpx 30rpx;
+  height: 50px; /* 导航栏高度 */
+  padding: 0 30rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+  background: rgba(255, 255, 255, 0.8);
 }
+
 
 .user-info {
   display: flex;
@@ -17,15 +29,17 @@
 }
 
 .avatar {
-  width: 64rpx;
-  height: 64rpx;
+  width: 70rpx;
+  height: 70rpx;
   border-radius: 50%;
   margin-right: 16rpx;
+  border: 1rpx solid rgba(0, 0, 0, 0.05); /* 细微边框增加质感 */
 }
 
 .username {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 500;
+  color: #333;
 }
 
 .points-info {
@@ -35,85 +49,115 @@
 
 .points-label {
   font-size: 24rpx;
-  color: #64748B;
+  color: #888;
+  margin-right: 8rpx; /* 增加标签与数值之间的间距 */
 }
 
 .points-value {
-  font-size: 36rpx;
+  font-size: 40rpx; /* 增大字体 */
   font-weight: 600;
-  color: #2DD4BF;
-  margin-left: 8rpx;
+  color: #2DD4BF; /* 与设计稿保持一致的鲜明绿色 */
+  background: linear-gradient(90deg, #2DD4BF, #4EECD6); /* 添加渐变效果 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .refresh-btn {
-  width: 64rpx;
-  height: 64rpx;
+  width: 48rpx;
+  height: 48rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 20rpx;
+  margin-left: 15rpx;
+  opacity: 0.65;
 }
 
 /* 功能区网格 */
 .function-grid {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20rpx; /* 减小底部边距 */
+  margin-bottom: 20rpx;
 }
+
 
 .function-item {
-  width: 32%; /* 调整宽度 */
+  width: 32%;
+  min-height: 160rpx;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20rpx 10rpx; /* 减小内边距 */
-  border-radius: 12rpx;
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10rpx);
+  justify-content: center;
+  border-radius: 16rpx;
+  background-color: white;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  padding: 20rpx;
+  position: relative;
 }
 
-.function-icon {
-  width: 96rpx;
-  height: 96rpx;
-  border-radius: 12rpx;
-  margin-bottom: 12rpx; /* 减小图标底部边距 */
+
+.function-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: linear-gradient(to right, #2DD4BF, #38bdf8);
+  opacity: 0.8;
 }
+
+.function-content {
+  padding: 20rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 
 .function-title {
   font-size: 28rpx;
-  margin-bottom: 6rpx; /* 减小标题底部边距 */
+  font-weight: 500;
+  margin-bottom: 8rpx;
+  color: #333;
 }
+
 
 .function-desc {
   font-size: 22rpx;
-  color: #64748B;
+  color: #999;
+  line-height: 1.4;
 }
 
 /* 卡片通用样式 */
 .card {
   width: 100%;
-  border-radius: 12rpx;
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10rpx);
-  padding: 20rpx; /* 减小内边距 */
-  margin-bottom: 20rpx; /* 减小卡片之间的距离 */
+  border-radius: 18rpx;
+  background-color: white;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  margin-bottom: 20rpx;
+  overflow: hidden;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16rpx; /* 减小头部底部边距 */
+  padding: 22rpx 24rpx;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.04);
 }
 
 .card-title {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 500;
+  color: #333;
 }
 
 .card-subtitle {
-  font-size: 24rpx;
-  color: #9CA3AF;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.card-content {
+  padding: 16rpx 24rpx;
 }
 
 .card-content.hidden {
@@ -123,8 +167,10 @@
 /* 公告和状态样式 */
 .notice-text, .status-text {
   font-size: 26rpx;
+  color: #666;
   display: flex;
   align-items: center;
+  line-height: 1.5;
 }
 
 .text-success {
@@ -133,6 +179,10 @@
 
 .text-error {
   color: #EF4444;
+}
+
+.text-primary {
+  color: #2DD4BF;
 }
 
 /* 历史记录列表 */
@@ -144,40 +194,47 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16rpx 0; /* 减小上下内边距 */
-  border-bottom: 1rpx solid #F3F4F6; /* 减小分隔线粗细 */
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.04);
 }
 
 .history-item:last-child {
   border-bottom: none;
 }
 
+.history-info {
+  flex: 1;
+}
+
 .history-title {
   font-size: 26rpx;
-  margin-bottom: 6rpx; /* 减小标题底部边距 */
+  color: #333;
+  margin-bottom: 6rpx;
+  font-weight: 500;
 }
 
 .history-time {
-  font-size: 22rpx;
-  color: #9CA3AF;
+  font-size: 24rpx;
+  color: #AEAEB4;
 }
 
 .history-points {
-  font-size: 26rpx;
+  font-size: 28rpx;
   color: #2DD4BF;
+  text-align: right;
+  min-width: 70rpx;
+  font-weight: 500;
 }
-
-/* 底部操作区 - 已删除不需要了 */
 
 /* 图标字体 */
 @font-face {
   font-family: "iconfont";
-  src: url('data:font/woff2;charset=utf-8;base64,d09GMgABAAAAAAWgAAsAAAAACzwAAAVTAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHFQGYACDXgqIDIZ+ATYCJAMcCxAABCAFhGcHgQQbrQnjkjBSObKfB7bTUDIZPnltcQC5OmaBZYPNZCQgA6IwPg/1UlQ0Ue77exm9UFUVA1Eg0QlqZpeaSrC7Sn4tApFpN0iHNaR8uQAfJV/YD2/T/rLMA3kWZZOKJ5qGUieR14knQpIQIUQ01M3r/Ga1YdpCpbnfbW/fv/dFLBmJkFqJhEiaSGgUSCUkoVFiVnY9Zha8ZWb/BLwbgYBKQwxS23HsNQDCYV0CTJ87NzkAYRmHYhGEyLipaK1I3oEVY7ZEzwDe2n8fP6AWCMCKe+DeHeNtdWDwzR1nZPK/ZKwxILTnB7iLgAExgCTZK9nSN7QrjqHU7/NJUwoEdHr81t//8/r9VtvWHWc0TpX+jweEZmx4eAROIcLDr6YQfHMFFr5jK4Dw5w6iOIxPDMgRDAQcwe0uQTxwCWSB0mG4B1ByYXj+V7gajBEfYJIoavCcC88iBKZPxwwOIyIRKSpmIRHKPCOMbkQYzfLzs+wgIKdXGCnB04+j4rl8OC7oPuznKZBCc+7B7+Q/tZnchPqDPEoHK26PiOXy/VLq9YKyWi2+V2pzuaKO23Ps7eEzZ/xnyf9yOVK4tqZRPmSsucXk69U8Ow2gqo1HBtJVp9V8Tm8xqW6x5tLp3lGe5tAJVr3eCa+b85Ip1t9s1p1kOufpv39XuK7a3rQvDkbgLfZ5/r7V9aNbTcvKkVOe37bYH/CcvMOv2+1Lys62P1tTLe/0MrXfvTcOEm+9vUzbzaPFfH4QfnlxzlfKdUy+5bpv84DFJ03TrZiRyaRMJv0N9aN42U3XZrumiqqVidJN19vTytEoXUhNZYxZPLrQPOozTz3tLTGb04tKT6vjrXkbHcvmCGe5aSuLGlnLWspSVrmxWw7KCkpzc4sDI3OFVqvsxm2tqdbMbp/QUL+KtlhFJSp1oU0kgmK7zWaqMxfacgMLhaLAwOb/l/WL5aONWGvJXG/8c/Sfh/VfDNTLnp2LXkm3FW/+EXH+9PnG/PX51lLVsdlSXV7GW2ZQpW5tpFJi24YgTZTXz86l6c3dQ/tOXm13ebOqpqvrjTfkjV1dNZGKruqXI6ueHI+MrJLX3k5Sb79dnSTiVRXGVDYbJ98QFRUlaZAmF5l6w0eSr7+uGmnuDu34cTMVvbNnT7SImhmVnMxKxsQZMpEoWVRkSMZEYoZ0Vpb0CuOO0mZluXb06JVY79x1Lmtt9dGjF4S2zUvfVU4PHX40+QW8UXo0NCsLGrJzLs1mlGY1q/FbYvEO7rlblWV0l3yxTJbVaXDWOXQ1NDQZHu+Rz9G9+mTodtjA4HAFLXv7j7hfVu4A3DavAP/OfAxz1S9RgwAA/uW3gFHMmGd8lzk/wP0aWxXH3I/x59x1zM8D3DhG8vOTI4HgxS8Z06X+a6IAfPJlRZ7Cz2NlePQ2H/Z4B8hYRTD8FZMcnfC2cDPsKWM5CIBQESd2jC7DfEFYNMcuGJWxG4Y5OoSolQxCcMiBOPrAShUDYTxKYbSiGgKUgwRAGFUAkNDdA0Yj7gAk0I8IUffAUkc+LA15DdvZZDSyS8jCODVwk50ZoqqqAc3Qdtgfs3E6Z7f0m4joF84GtqXln+gpx7DHc2LG0BItQrxC12WhMZ6hQ0/BMoYhhM7SdT11YXd31VBeFYbZOE0PdgmyYBiNL2YndkZeq8rs+fs3RKRX4RoUx6b4JzQrjoMez4k+hhZVFxdR2Sse4mXCZGmeDBqkU8gMhpJBJ2HJBK4eNS4l6GpzK1W7l70+G5Y/rBE0YpghIuJErIhTNchw6oA6OdmQF6p39HlnZjpZ3G0AAAAA') format('woff2');
+  src: url('data:font/woff2;charset=utf-8;base64,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') format('woff2');
 }
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 32rpx;
+  font-size: 28rpx;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -193,34 +250,47 @@
 
 .icon-notice:before {
   content: "\e645";
+  margin-right: 12rpx;
+  font-size: 32rpx;
 }
 
 .icon-success:before {
   content: "\e610";
+  margin-right: 12rpx;
+  font-size: 32rpx;
+  color: #10B981;
 }
 
 .icon-error:before {
   content: "\e64a";
+  margin-right: 12rpx;
+  font-size: 32rpx;
+  color: #EF4444;
 }
 
-/* 新增 - 处理禁用状态的样式 */
+/* 处理禁用状态的样式 */
 .disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  opacity: 0.65;
 }
 
 .gray-text {
-  color: #9CA3AF;
+  color: #999;
 }
 
-/* 调整容器的样式 */
 .container {
-  padding: 0 20rpx; /* 减小左右边距 */
+  padding: 0 24rpx;
+  margin-top: calc(120rpx + env(safe-area-inset-top)); /* 调整这个值以适应您的导航栏高度 */
 }
 
-/* 积分消耗明细金额样式特殊调整 */
-.history-points.text-primary {
-  color: #2DD4BF;
-  text-align: right;
-  min-width: 80rpx; /* 确保对齐 */
+
+/* 主容器调整 */
+.container {
+  margin-top: 90px; /* 状态栏+导航栏的总高度 */
+  padding: 0 24rpx;
 }
+
+/* 
+.container {
+  padding: 0 24rpx;
+  margin-top: calc(90rpx + {{statusBarHeight}}px);
+} */

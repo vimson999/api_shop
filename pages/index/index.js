@@ -21,18 +21,23 @@ Page({
     ] // 固定的假消费记录
   },
 
-  onLoad() {
-    // 保留这部分代码以便后续接入真实API
+  onLoad: function() {
+    // 获取系统信息
+    const systemInfo = wx.getSystemInfoSync();
+    const statusBarHeight = systemInfo.statusBarHeight;
+    
+    // 设置状态栏高度
+    this.setData({
+      statusBarHeight: statusBarHeight
+    });
+    
+    // 原有代码保持不变
     if (app.globalData.isLoggedIn) {
       this.setData({
         userInfo: app.globalData.userInfo,
         points: app.globalData.points
       });
     }
-    
-    // 以下API相关代码暂时注释掉，使用假数据
-    // this.getKeyCount();
-    // this.getConsumeHistory();
   },
   
   onShow() {
