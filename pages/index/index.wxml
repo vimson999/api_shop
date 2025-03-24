@@ -27,12 +27,13 @@
       <text class="function-title">API Key</text>
       <text class="function-desc">{{keyCount}}个Key使用中</text>
     </view>
-    <view class="function-item neo-shadow" bindtap="navigateToDoc">
+  
+    <view class="function-item neo-shadow disabled" bindtap="showDocComingSoon">
       <image class="function-icon" src="/assets/images/doc-center.png" mode="aspectFill"></image>
-      <text class="function-title">文档中心</text>
-      <text class="function-desc">查看接口文档</text>
+      <text class="function-title gray-text">文档中心</text>
+      <text class="function-desc gray-text">即将上线</text>
     </view>
-  </view>
+
 
   <!-- 系统公告 -->
   <view class="card neo-shadow">

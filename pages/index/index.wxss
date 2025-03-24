@@ -241,3 +241,13 @@
 .icon-error:before {
   content: "\e64a";
 }
+
+/* 添加到index.wxss中 */
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gray-text {
+  color: #9CA3AF;
+}

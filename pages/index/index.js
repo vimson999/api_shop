@@ -144,6 +144,14 @@ Page({
     });
   },
   
+// 在index.js中添加
+showComingSoon() {
+  wx.showToast({
+    title: '功能即将上线',
+    icon: 'none'
+  });
+},
+
   // 导航到API Key页面
   navigateToApiKey() {
     wx.switchTab({
@@ -152,9 +160,13 @@ Page({
   },
   
   // 导航到文档中心
-  navigateToDoc() {
-    wx.navigateTo({
-      url: '/pages/docCenter/docCenter'
-    });
-  }
+  // 修改navigateToDoc函数为showDocComingSoon
+showDocComingSoon() {
+  wx.showToast({
+    title: '文档中心功能即将上线',
+    icon: 'none',
+    duration: 2000
+  });
+}
+
 });
