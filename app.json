@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/buyPoints/buyPoints",
+    "pages/apiKey/apiKey",
+    "pages/user/user"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "晓山青又清",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#888888",
+    "selectedColor": "#2DD4BF",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home_selected.png"
+      },
+      {
+        "pagePath": "pages/buyPoints/buyPoints",
+        "text": "购买积分",
+        "iconPath": "assets/icons/coins.png",
+        "selectedIconPath": "assets/icons/coins_selected.png"
+      },
+      {
+        "pagePath": "pages/apiKey/apiKey",
+        "text": "API Key",
+        "iconPath": "assets/icons/key.png",
+        "selectedIconPath": "assets/icons/key_selected.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "assets/icons/user.png",
+        "selectedIconPath": "assets/icons/user_selected.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,88 @@
+<!-- 顶部导航栏 -->
+<view class="nav-bar glass-effect">
+  <view class="user-info">
+    <image class="avatar" src="/assets/images/avatar.png" mode="aspectFill"></image>
+    <text class="username">{{userInfo.nickName || '未登录'}}</text>
+  </view>
+  <view class="points-info">
+    <text class="points-label">积分余额</text>
+    <text class="points-value">{{points}}</text>
+    <view class="refresh-btn" bindtap="refreshPoints">
+      <text class="iconfont icon-refresh"></text>
+    </view>
+  </view>
+</view>
+
+<!-- 主要内容区域 -->
+<view class="container" style="margin-top: 120rpx;">
+  <!-- 功能区 -->
+  <view class="function-grid">
+    <view class="function-item neo-shadow" bindtap="navigateToBuyPoints">
+      <image class="function-icon" src="/assets/images/buy-points.png" mode="aspectFill"></image>
+      <text class="function-title">购买积分</text>
+      <text class="function-desc">热销：50元=600分</text>
+    </view>
+    <view class="function-item neo-shadow" bindtap="navigateToApiKey">
+      <image class="function-icon" src="/assets/images/api-key.png" mode="aspectFill"></image>
+      <text class="function-title">API Key</text>
+      <text class="function-desc">{{keyCount}}个Key使用中</text>
+    </view>
+    <view class="function-item neo-shadow" bindtap="navigateToDoc">
+      <image class="function-icon" src="/assets/images/doc-center.png" mode="aspectFill"></image>
+      <text class="function-title">文档中心</text>
+      <text class="function-desc">查看接口文档</text>
+    </view>
+  </view>
+
+  <!-- 系统公告 -->
+  <view class="card neo-shadow">
+    <view class="card-header">
+      <text class="card-title">系统公告</text>
+      <text class="iconfont icon-down" bindtap="toggleNotice"></text>
+    </view>
+    <view class="card-content {{showNotice ? '' : 'hidden'}}">
+      <text class="notice-text"><text class="iconfont icon-notice text-primary"></text> 新增图像生成API服务，支持多种模型，欢迎体验！</text>
+    </view>
+  </view>
+
+  <!-- API服务状态 -->
+  <view class="card neo-shadow">
+    <view class="card-header">
+      <text class="card-title">API 服务状态</text>
+      <text class="iconfont icon-down" bindtap="toggleApiStatus"></text>
+    </view>
+    <view class="card-content {{showApiStatus ? '' : 'hidden'}}">
+      <text class="status-text {{apiStatus === 'normal' ? 'text-success' : 'text-error'}}">
+        <text class="iconfont {{apiStatus === 'normal' ? 'icon-success' : 'icon-error'}}"></text>
+        {{apiStatus === 'normal' ? '所有服务运行正常' : '部分服务异常'}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 积分消耗明细 -->
+  <view class="card neo-shadow">
+    <view class="card-header">
+      <text class="card-title">积分消耗明细</text>
+      <text class="card-subtitle">最近10次</text>
+    </view>
+    <view class="card-content">
+      <view class="history-list">
+        <view wx:for="{{consumeHistory}}" wx:key="index" class="history-item">
+          <view class="history-info">
+            <view class="history-title">{{item.title}}</view>
+            <view class="history-time">{{item.time}}</view>
+          </view>
+          <view class="history-points text-primary">-{{item.points}}分</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 底部操作区 -->
+<!-- <view class="bottom-actions glass-effect">
+  <view class="action-buttons">
+    <button class="btn btn-primary" bindtap="generateKey">生成 Key</button>
+    <button class="btn btn-secondary" bindtap="navigateToBuyPoints">购买积分</button>
+  </view>
+</view> -->

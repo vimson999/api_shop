@@ -1,0 +1,39 @@
+/* 全局样式设置 */
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(to bottom right, #f9fafb, #f1f5f9);
+  color: #333333;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30rpx;
+}
+
+/* 常用样式类 */
+.neo-shadow {
+  box-shadow: 16rpx 16rpx 32rpx #e2e8f0, -16rpx -16rpx 32rpx #ffffff;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20rpx);
+}
+
+/* 主色调定义 */
+.text-primary {
+  color: #2DD4BF;
+}
+
+.bg-primary {
+  background-color: #2DD4BF;
+}
+
+.text-secondary {
+  color: #64748B;
+}
+
+.bg-secondary {
+  background-color: #64748B;
+}
