@@ -1,4 +1,4 @@
-/* app.wxss - 全局样式 */
+/* app.wxss - 全局样式 - 最终优化版 */
 page {
   background-color: #f7f8fc;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -9,11 +9,11 @@ page {
 
 /* 通用样式 */
 .text-primary {
-  color: #2DD4BF;
+  color: #26ECD2; /* 更亮的主题色 */
 }
 
 .bg-primary {
-  background-color: #2DD4BF;
+  background-color: #26ECD2;
 }
 
 .text-secondary {
@@ -116,5 +116,5 @@ button::after {
 }
 
 .shadow {
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06); /* 更柔和的阴影 */
 }

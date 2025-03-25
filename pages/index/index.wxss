@@ -7,7 +7,6 @@ page {
 .page-container {
   padding: 0 24rpx;
   box-sizing: border-box;
-  padding-top: 20rpx;
 }
 
 /* 头部样式 */
@@ -28,6 +27,7 @@ page {
   height: 90rpx;
   border-radius: 50%;
   margin-right: 16rpx;
+  background-color: #f0f0f0; /* 头像背景色，避免加载前空白 */
 }
 
 .username {
@@ -100,6 +100,8 @@ page {
   font-weight: 500;
   color: #333;
   margin-bottom: 12rpx;
+  text-align: center;
+
 }
 
 .card-desc {
@@ -115,6 +117,8 @@ page {
   align-items: center;
   padding: 24rpx 30rpx;
   border-bottom: 1rpx solid rgba(0, 0, 0, 0.05);
+  /* text-align: center */
+
 }
 
 .section-title {
@@ -132,10 +136,30 @@ page {
   padding: 24rpx 30rpx;
 }
 
+.card-body.no-padding {
+  padding: 10rpx 30rpx;
+}
+
 /* 系统公告 */
 .notice-content {
   display: flex;
   align-items: center;
+}
+
+.notice-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background-color: rgba(45, 212, 191, 0.1);
+  margin-right: 16rpx;
+}
+
+.notice-image {
+  width: 28rpx;
+  height: 28rpx;
 }
 
 .notice-text {
@@ -149,19 +173,26 @@ page {
 .status-content {
   display: flex;
   align-items: center;
+  padding: 10rpx 0;
+}
+
+.status-icon-container {
+  margin-right: 12rpx;
+  display: flex;
+}
+
+.status-icon {
+  width: 36rpx;
+  height: 36rpx;
 }
 
 .status-text {
-  font-size: 28rpx;
+  font-size: 30rpx;
   line-height: 1.5;
 }
 
 .text-success {
   color: #10B981;
-}
-
-.text-error {
-  color: #EF4444;
 }
 
 .text-primary {
@@ -191,7 +222,7 @@ page {
 }
 
 .history-title {
-  font-size: 30rpx;
+  font-size: 27rpx;
   color: #333;
   margin-bottom: 8rpx;
   font-weight: 500;
@@ -203,7 +234,7 @@ page {
 }
 
 .history-points {
-  font-size: 30rpx;
+  font-size: 27rpx;
   color: #2DD4BF;
   font-weight: 500;
 }
@@ -236,8 +267,7 @@ page {
 
 .icon-notice:before {
   content: "\e645";
-  margin-right: 16rpx;
-  font-size: 32rpx;
+  font-size: 28rpx;
   color: #2DD4BF;
 }
 

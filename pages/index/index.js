@@ -11,6 +11,7 @@ Page({
     showNotice: true,
     showApiStatus: true,
     apiStatus: 'normal', // 'normal' 或 'error'
+    statusBarHeight: 0, // 状态栏高度
     consumeHistory: [
       { title: '图像生成 1024x1024', time: '2024-01-20 15:30:25', points: 15 },
       { title: '文本生成 2000字', time: '2024-01-20 15:28:12', points: 20 },
@@ -22,9 +23,29 @@ Page({
 
   onLoad: function() {
     // 获取系统信息
-    const systemInfo = wx.getSystemInfoSync();
-    this.setData({
-      statusBarHeight: systemInfo.statusBarHeight
+    try {
+      const systemInfo = wx.getSystemInfoSync();
+      this.setData({
+        statusBarHeight: systemInfo.statusBarHeight
+      });
+      console.log('状态栏高度:', systemInfo.statusBarHeight);
+    } catch (e) {
+      console.error('获取系统信息失败:', e);
+    }
+    
+    // 检查头像资源是否存在
+    wx.getFileSystemManager().access({
+      path: '/assets/images/avatar.png',
+      success: () => {
+        console.log('头像资源存在');
+      },
+      fail: (err) => {
+        console.error('头像资源不存在:', err);
+        // 如果头像资源不存在，使用默认头像
+        this.setData({
+          'userInfo.avatarUrl': '/assets/images/default-avatar.png'
+        });
+      }
     });
     
     // 如果有登录信息则更新用户信息

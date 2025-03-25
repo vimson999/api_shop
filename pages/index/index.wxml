@@ -1,5 +1,5 @@
 <!-- index.wxml -->
-<view class="page-container">
+<view class="page-container" style="padding-top: {{statusBarHeight + 100}}rpx;">
   <!-- 头部用户信息及积分 -->
   <view class="header">
     <view class="user-info">
@@ -32,41 +32,53 @@
     <view class="card function-card" bindtap="showDocComingSoon">
       <view class="card-content">
         <text class="card-title">文档中心</text>
-        <text class="card-desc">查看接口文档</text>
+        <text class="card-desc" style="text-align:center">查看接口文档</text>
       </view>
     </view>
   </view>
-
-  <!-- 系统公告 -->
-  <view class="card notice-card">
+ <!-- 系统公告 -->
+ <view class="card notice-card">
     <view class="card-header">
       <text class="section-title">系统公告</text>
       <text class="iconfont icon-down" bindtap="toggleNotice"></text>
     </view>
     <view class="card-body" wx:if="{{showNotice}}">
       <view class="notice-content">
-        <text class="iconfont icon-notice"></text>
+        <view class="notice-icon">
+          <image src="/assets/icons/notice.png" mode="aspectFit" class="notice-image"></image>
+        </view>
         <text class="notice-text">新增图像生成API服务，支持多种模型，欢迎体验！</text>
       </view>
     </view>
   </view>
 
+  
+  
+  
+  
   <!-- API服务状态 -->
   <view class="card status-card">
     <view class="card-header">
       <text class="section-title">API 服务状态</text>
       <text class="iconfont icon-down" bindtap="toggleApiStatus"></text>
     </view>
-    <view class="card-body" wx:if="{{showApiStatus}}">
+    <view class="card-body no-padding" wx:if="{{showApiStatus}}">
       <view class="status-content">
-        <text class="iconfont icon-success" wx:if="{{apiStatus === 'normal'}}"></text>
-        <text class="iconfont icon-error" wx:else></text>
+        <view class="status-icon-container" wx:if="{{apiStatus === 'normal'}}">
+          <image src="/assets/icons/check-circle.png" mode="aspectFit" class="status-icon"></image>
+        </view>
+        <view class="status-icon-container error" wx:else>
+          <image src="/assets/icons/error.png" mode="aspectFit" class="status-icon"></image>
+        </view>
         <text class="status-text {{apiStatus === 'normal' ? 'text-success' : 'text-error'}}">
           {{apiStatus === 'normal' ? '所有服务运行正常' : '部分服务异常'}}
         </text>
       </view>
     </view>
   </view>
+
+  
+
 
   <!-- 积分消耗明细 -->
   <view class="card history-card">
