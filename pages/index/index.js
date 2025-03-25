@@ -1,14 +1,13 @@
-// 获取应用实例
+// index.js
 const app = getApp();
-const request = require('../../utils/request.js');
 
 Page({
   data: {
     userInfo: {
-      nickName: '陈志强' // 固定的假用户名
+      nickName: '陈志强' // 按设计稿固定用户名
     },
-    points: 2680, // 固定的假积分余额
-    keyCount: 2, // 固定的假Key数量
+    points: 2680, // 按设计稿固定积分
+    keyCount: 2, // 按设计稿固定的API Key数量
     showNotice: true,
     showApiStatus: true,
     apiStatus: 'normal', // 'normal' 或 'error'
@@ -18,20 +17,17 @@ Page({
       { title: '语音转写 5分钟', time: '2024-01-20 15:25:43', points: 25 },
       { title: '图像生成 512x512', time: '2024-01-20 15:20:18', points: 10 },
       { title: '文本生成 1000字', time: '2024-01-20 15:15:32', points: 10 }
-    ] // 固定的假消费记录
+    ] // 按设计稿固定的消费记录
   },
 
   onLoad: function() {
     // 获取系统信息
     const systemInfo = wx.getSystemInfoSync();
-    const statusBarHeight = systemInfo.statusBarHeight;
-    
-    // 设置状态栏高度
     this.setData({
-      statusBarHeight: statusBarHeight
+      statusBarHeight: systemInfo.statusBarHeight
     });
     
-    // 原有代码保持不变
+    // 如果有登录信息则更新用户信息
     if (app.globalData.isLoggedIn) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -40,18 +36,7 @@ Page({
     }
   },
   
-  onShow() {
-    // 页面显示时刷新数据 - 暂时注释掉
-    /*
-    if (app.globalData.isLoggedIn) {
-      this.refreshPoints();
-      this.getKeyCount();
-      this.getConsumeHistory();
-    }
-    */
-  },
-  
-  // 刷新积分 - 现在只是刷新假数据的动画效果
+  // 刷新积分
   refreshPoints() {
     wx.showLoading({
       title: '刷新中',
@@ -66,36 +51,6 @@ Page({
     }, 500);
   },
   
-  // 获取API Key数量
-  getKeyCount() {
-    if (!app.globalData.isLoggedIn) return;
-    
-    request.get('/user/apikeys/count', {}, false)
-      .then(res => {
-        this.setData({
-          keyCount: res.count
-        });
-      })
-      .catch(err => {
-        console.error('获取API Key数量失败', err);
-      });
-  },
-  
-  // 获取消费记录
-  getConsumeHistory() {
-    if (!app.globalData.isLoggedIn) return;
-    
-    request.get('/user/points/history', { limit: 10 }, true)
-      .then(res => {
-        this.setData({
-          consumeHistory: res.history
-        });
-      })
-      .catch(err => {
-        console.error('获取消费记录失败', err);
-      });
-  },
-  
   // 切换系统公告显示
   toggleNotice() {
     this.setData({
@@ -107,29 +62,6 @@ Page({
   toggleApiStatus() {
     this.setData({
       showApiStatus: !this.data.showApiStatus
-    });
-  },
-  
-  // 生成Key
-  generateKey() {
-    if (!app.globalData.isLoggedIn) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      });
-      return;
-    }
-    
-    wx.showModal({
-      title: '生成API Key',
-      content: '确定要生成新的API Key吗？',
-      success: (res) => {
-        if (res.confirm) {
-          wx.navigateTo({
-            url: '/pages/apiKey/generate/generate'
-          });
-        }
-      }
     });
   },
   

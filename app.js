@@ -1,3 +1,4 @@
+// app.js - 应用入口
 App({
   onLaunch() {
     // 检查登录状态
@@ -8,7 +9,7 @@ App({
     userInfo: null,
     points: 0,
     isLoggedIn: false,
-    apiBaseUrl: 'https://你的API服务器地址' // 替换为你的实际API地址
+    apiBaseUrl: 'https://api.example.com' // 替换为你的实际API地址
   },
   
   checkLoginStatus() {
