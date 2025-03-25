@@ -1,5 +1,6 @@
 // index.js
 const app = getApp();
+const auth = require('../../utils/auth.js');
 
 Page({
   data: {
@@ -22,6 +23,11 @@ Page({
   },
 
   onLoad: function() {
+    // 检查登录状态
+    if (!auth.checkAuth(this)) {
+      return;
+    }
+    
     // 获取系统信息
     try {
       const systemInfo = wx.getSystemInfoSync();
@@ -51,8 +57,31 @@ Page({
     // 如果有登录信息则更新用户信息
     if (app.globalData.isLoggedIn) {
       this.setData({
-        userInfo: app.globalData.userInfo,
-        points: app.globalData.points
+        userInfo: {
+          ...this.data.userInfo,
+          nickName: app.globalData.userInfo?.nickName || this.data.userInfo.nickName,
+          avatarUrl: app.globalData.userInfo?.avatarUrl || '/assets/images/default-avatar.png'
+        },
+        points: app.globalData.points || this.data.points,
+        keyCount: app.globalData.mockApiKeys?.length || this.data.keyCount
+      });
+    }
+  },
+  
+  onShow: function() {
+    // 在页面显示时再次检查登录状态
+    auth.checkOnShow(this);
+    
+    // 如果有登录信息则刷新用户信息
+    if (app.globalData.isLoggedIn) {
+      this.setData({
+        userInfo: {
+          ...this.data.userInfo,
+          nickName: app.globalData.userInfo?.nickName || this.data.userInfo.nickName,
+          avatarUrl: app.globalData.userInfo?.avatarUrl || '/assets/images/default-avatar.png'
+        },
+        points: app.globalData.points || this.data.points,
+        keyCount: app.globalData.mockApiKeys?.length || this.data.keyCount
       });
     }
   },

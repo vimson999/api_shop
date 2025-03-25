@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/buyPoints/buyPoints",
     "pages/apiKey/apiKey",
@@ -11,7 +12,6 @@
     "navigationBarTitleText": "晓山青又清",
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom" 
-
   },
   "tabBar": {
     "color": "#888888",

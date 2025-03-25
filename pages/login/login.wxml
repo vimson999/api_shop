@@ -1,0 +1,39 @@
+<!-- pages/login/login.wxml -->
+<view class="login-container" style="padding-top: {{statusBarHeight + 80}}rpx;">
+  <view class="logo-container">
+    <image class="logo" src="/assets/images/logo.png" mode="aspectFit"></image>
+    <text class="app-name">晓山青又清</text>
+    <text class="app-desc">API SHOP</text>
+  </view>
+  
+  <view class="login-box">
+    <text class="login-title">欢迎使用</text>
+    <text class="login-desc">登录后即可体验完整功能</text>
+    
+    <button 
+      class="login-btn wechat-btn" 
+      open-type="getUserInfo" 
+      bindtap="handleWechatLogin" 
+      loading="{{loading}}"
+      disabled="{{loading}}">
+      <view class="btn-content">
+        <image class="btn-icon" src="/assets/icons/wechat.png" mode="aspectFit"></image>
+        <text class="btn-text">微信登录</text>
+      </view>
+    </button>
+    
+    <!-- <button class="login-btn phone-btn" bindtap="navigateToPhoneLogin">
+      <view class="btn-content">
+        <image class="btn-icon" src="/assets/icons/phone.png" mode="aspectFit"></image>
+        <text class="btn-text">手机号登录</text>
+      </view>
+    </button> -->
+  </view>
+  
+  <view class="policy-agreement">
+    <text class="agreement-text">登录即表示同意</text>
+    <text class="agreement-link">《用户协议》</text>
+    <text class="agreement-text">和</text>
+    <text class="agreement-link">《隐私政策》</text>
+  </view>
+</view>

@@ -1,1 +1,455 @@
 /* pages/apiKey/apiKey.wxss */
+.page-container {
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #f7f8fc;
+}
+
+/* 顶部标题栏 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx 0;
+}
+
+.page-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.create-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70rpx;
+  padding: 0 30rpx;
+  background-color: #26ECD2;
+  border-radius: 8rpx;
+}
+
+.create-btn-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* API Key列表 */
+.api-key-list {
+  margin-bottom: 40rpx;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 0;
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 6rpx solid #f3f3f3;
+  border-top: 6rpx solid #26ECD2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0;
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+
+.empty-desc {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+  padding: 0 60rpx;
+}
+
+/* 卡片式布局 */
+.key-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.key-card {
+  background-color: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.key-card-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  align-items: center;
+}
+
+.key-name-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.key-name {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 12rpx;
+}
+
+.key-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-indicator {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+}
+
+.status-indicator.active {
+  background-color: #10B981;
+}
+
+.status-indicator.inactive {
+  background-color: #9CA3AF;
+}
+
+.status-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.key-card-body {
+  padding: 24rpx 30rpx;
+}
+
+.key-info-item {
+  display: flex;
+  margin-bottom: 16rpx;
+}
+
+.key-info-item:last-child {
+  margin-bottom: 0;
+}
+
+.key-info-label {
+  font-size: 28rpx;
+  color: #666;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.key-info-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.key-actions {
+  display: flex;
+}
+
+.action-btn {
+  font-size: 24rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 6rpx;
+  text-align: center;
+}
+
+.toggle-btn {
+  color: #fff;
+  margin-right: 10rpx;
+}
+
+.enable-btn {
+  background-color: #10B981;
+}
+
+.disable-btn {
+  background-color: #9CA3AF;
+}
+
+.delete-btn {
+  background-color: #FEF2F2;
+  color: #EF4444;
+}
+
+/* 模态框样式 */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  width: 85%;
+  background-color: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.confirm-modal {
+  width: 70%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40rpx 40rpx 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 40rpx;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  background-color: #f8f9fa;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #333;
+  border: 1rpx solid #eee;
+}
+
+.expiry-options {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10rpx;
+}
+
+.expiry-option {
+  margin: 10rpx;
+  padding: 16rpx 24rpx;
+  background-color: #f8f9fa;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: 1rpx solid #eee;
+}
+
+.expiry-option.selected {
+  background-color: rgba(38, 236, 210, 0.1);
+  border-color: #26ECD2;
+  color: #26ECD2;
+}
+
+.modal-footer {
+  display: flex;
+  padding: 20rpx 40rpx 40rpx;
+  justify-content: flex-end;
+}
+
+.modal-btn {
+  height: 80rpx;
+  padding: 0 40rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20rpx;
+}
+
+.cancel-btn {
+  background-color: #f8f9fa;
+  color: #666;
+}
+
+.confirm-btn {
+  background-color: #26ECD2;
+  color: #fff;
+}
+
+.confirm-btn.disabled {
+  background-color: #C4C4C4;
+  color: #fff;
+}
+
+.delete-confirm-btn {
+  background-color: #EF4444;
+  color: #fff;
+}
+
+/* 创建成功样式 */
+.success-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.success-text {
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.key-warning {
+  font-size: 26rpx;
+  color: #EF4444;
+  margin-bottom: 30rpx;
+}
+
+.key-display {
+  width: 100%;
+  background-color: #f8f9fa;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+  border: 1rpx dashed #ddd;
+}
+
+.key-value {
+  font-size: 28rpx;
+  color: #333;
+  word-break: break-all;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.copy-btn {
+  width: 100%;
+  height: 80rpx;
+  background-color: #26ECD2;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+}
+
+.copy-btn-text {
+  font-size: 28rpx;
+  color: #fff;
+}
+
+.save-confirm {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 6rpx;
+  border: 2rpx solid #ddd;
+  margin-right: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox.checked {
+  background-color: #26ECD2;
+  border-color: #26ECD2;
+}
+
+.checkbox-inner {
+  width: 24rpx;
+  height: 16rpx;
+  border: 2rpx solid #fff;
+  border-top: none;
+  border-right: none;
+  transform: rotate(-45deg);
+}
+
+.save-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 确认对话框样式 */
+.confirm-text {
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+  line-height: 1.6;
+}

@@ -1,2 +1,160 @@
-<!--pages/apiKey/apiKey.wxml-->
-<text>pages/apiKey/apiKey.wxml</text>
+<!-- pages/apiKey/apiKey.wxml -->
+<view class="page-container" style="padding-top: {{statusBarHeight + 44}}px;">
+  <!-- 顶部标题栏 -->
+  <view class="header">
+    <text class="page-title">API Key管理</text>
+    <view class="create-btn" bindtap="showCreateApiKey">
+      <text class="create-btn-text">+ 创建Key</text>
+    </view>
+  </view>
+
+  <!-- API Keys列表 -->
+  <view class="api-key-list">
+    <view wx:if="{{loading}}" class="loading-container">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <view wx:elif="{{apiKeys.length === 0}}" class="empty-container">
+      <image class="empty-icon" src="/assets/icons/empty.png" mode="aspectFit"></image>
+      <text class="empty-text">暂无API Key</text>
+      <text class="empty-desc">点击顶部的"创建Key"按钮创建您的第一个API Key</text>
+    </view>
+    
+    <view wx:else class="key-cards-container">
+      <!-- API Key卡片 -->
+      <view class="key-card" wx:for="{{apiKeys}}" wx:key="id">
+        <view class="key-card-header">
+          <view class="key-name-container">
+            <text class="key-name">{{item.name}}</text>
+            <view class="key-status">
+              <view class="status-indicator {{item.status === 'active' ? 'active' : 'inactive'}}"></view>
+              <text class="status-text">{{item.status === 'active' ? '正常' : '已禁用'}}</text>
+            </view>
+          </view>
+          <view class="key-actions">
+            <view class="action-btn toggle-btn {{item.status === 'active' ? 'disable-btn' : 'enable-btn'}}" 
+                  data-id="{{item.id}}" 
+                  data-status="{{item.status}}" 
+                  bindtap="toggleApiKeyStatus">
+              {{item.status === 'active' ? '禁用' : '启用'}}
+            </view>
+            
+            <view class="action-btn delete-btn" data-id="{{item.id}}" bindtap="showDeleteConfirm">
+              删除
+            </view>
+          </view>
+        </view>
+        
+        <view class="key-card-body">
+          <view class="key-info-item">
+            <text class="key-info-label">创建时间：</text>
+            <text class="key-info-value">{{formatDate(item.createdAt)}}</text>
+          </view>
+          
+          <view class="key-info-item">
+            <text class="key-info-label">过期时间：</text>
+            <text class="key-info-value">{{formatDate(item.expiresAt)}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 创建API Key模态框 -->
+  <view class="modal-container" wx:if="{{showCreateModal}}">
+    <view class="modal-mask" bindtap="closeCreateModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">创建API Key</text>
+        <view class="modal-close" bindtap="closeCreateModal">×</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="form-group">
+          <text class="form-label">名称</text>
+          <input class="form-input" 
+                 placeholder="为您的API Key命名" 
+                 value="{{newKeyName}}" 
+                 bindinput="onKeyNameInput" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">过期时间</text>
+          <view class="expiry-options">
+            <view class="expiry-option {{selectedExpiryId === item.id ? 'selected' : ''}}" 
+                  wx:for="{{expiryOptions}}" 
+                  wx:key="id" 
+                  data-id="{{item.id}}" 
+                  bindtap="selectExpiry">
+              {{item.name}}
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn cancel-btn" bindtap="closeCreateModal">取消</button>
+        <button class="modal-btn confirm-btn" bindtap="createApiKey">创建</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 创建成功模态框 -->
+  <view class="modal-container" wx:if="{{showSuccessModal}}">
+    <view class="modal-mask"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">API Key已创建</text>
+        <view class="modal-close" bindtap="closeSuccessModal">×</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="success-info">
+          <text class="success-text">您的API Key已创建成功</text>
+          <text class="key-warning">该密钥仅显示一次，请妥善保存</text>
+          
+          <view class="key-display">
+            <text class="key-value" selectable="true">{{newApiKey.key}}</text>
+          </view>
+          
+          <view class="copy-btn" bindtap="copyApiKey">
+            <text class="copy-btn-text">复制API Key</text>
+          </view>
+          
+          <view class="save-confirm" bindtap="toggleKeySaved">
+            <view class="checkbox {{keySaved ? 'checked' : ''}}">
+              <view class="checkbox-inner" wx:if="{{keySaved}}"></view>
+            </view>
+            <text class="save-text">我已保存API Key</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn confirm-btn {{!keySaved ? 'disabled' : ''}}" 
+                disabled="{{!keySaved}}" 
+                bindtap="closeSuccessModal">完成</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 删除确认对话框 -->
+  <view class="modal-container" wx:if="{{showDeleteConfirm}}">
+    <view class="modal-mask" bindtap="closeDeleteConfirm"></view>
+    <view class="modal-content confirm-modal">
+      <view class="modal-header">
+        <text class="modal-title">确认删除</text>
+      </view>
+      
+      <view class="modal-body">
+        <text class="confirm-text">删除后，该API Key将无法继续使用，确定要删除吗？</text>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn cancel-btn" bindtap="closeDeleteConfirm">取消</button>
+        <button class="modal-btn delete-confirm-btn" bindtap="deleteApiKey">确认删除</button>
+      </view>
+    </view>
+  </view>
+</view>
