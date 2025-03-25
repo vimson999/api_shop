@@ -1,2 +1,211 @@
-<!--pages/buyPoints/buyPoints.wxml-->
-<text>pages/buyPoints/buyPoints.wxml</text>
+<!-- pages/buyPoints/buyPoints.wxml -->
+<view class="page-container">
+  <!-- 吸顶状态栏 -->
+  <view class="status-bar" style="padding-top: {{statusBarHeight}}px;">
+    <view class="status-info">
+      <view class="status-item">
+        <text class="status-label">可用积分</text>
+        <text class="status-value">{{points}}</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label">有效期至</text>
+        <text class="status-value date">{{expiryDate}}</text>
+      </view>
+    </view>
+    <view class="ad-btn disabled" bindtap="showAdPointsHint">
+      <image class="ad-icon" src="/assets/icons/gift.png" mode="aspectFit"></image>
+      <text class="ad-text">看广告得积分</text>
+    </view>
+  </view>
+
+  <!-- 标签页切换 -->
+  <view class="tab-container">
+    <view 
+      wx:for="{{tabs}}" 
+      wx:key="index" 
+      class="tab-item {{currentTab === index ? 'active' : ''}}"
+      data-index="{{index}}"
+      bindtap="switchTab">
+      <text class="tab-text">{{item}}</text>
+      <view class="tab-indicator" wx:if="{{currentTab === index}}"></view>
+    </view>
+  </view>
+
+  <!-- 推荐套餐 -->
+  <view class="tab-content" wx:if="{{currentTab === 0}}">
+    <view wx:if="{{loading}}" class="loading-container">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <view wx:else class="packages-container">
+      <view 
+        wx:for="{{packages}}" 
+        wx:key="id" 
+        class="package-card {{item.isHot ? 'hot-package' : ''}} {{selectedPackageId === item.id ? 'selected' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="selectPackage">
+        
+        <view class="hot-tag" wx:if="{{item.isHot}}">热销</view>
+        
+        <view class="package-info">
+          <text class="package-name">{{item.name}}</text>
+          <text class="package-points">{{item.points}}积分</text>
+          
+          <view class="price-container">
+            <text class="price-value">¥{{item.price}}</text>
+            <text class="price-discount" wx:if="{{item.discount > 0}}">节省{{item.discount}}%</text>
+          </view>
+          
+          <text class="package-desc">{{item.description}}</text>
+        </view>
+        
+        <view 
+          class="buy-btn {{item.isHot ? 'primary-btn' : ''}} {{btnDisabled ? 'disabled' : ''}}"
+          data-id="{{item.id}}"
+          catchtap="buyPackage">
+          {{item.isHot ? '立即充值' : '购买'}}
+        </view>
+      </view>
+    </view>
+    
+    <view class="disclaimer">
+      <text class="disclaimer-text">购买即表示您同意《积分购买协议》</text>
+      <text class="disclaimer-text">积分一经购买，不支持退款</text>
+    </view>
+  </view>
+
+  <!-- 购买记录 -->
+  <view class="tab-content" wx:if="{{currentTab === 1}}">
+    <view wx:if="{{loadingHistory}}" class="loading-container">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <view wx:elif="{{purchaseHistory.length === 0}}" class="empty-container">
+      <image class="empty-icon" src="/assets/icons/empty-history.png" mode="aspectFit"></image>
+      <text class="empty-text">暂无购买记录</text>
+    </view>
+    
+    <view wx:else class="history-list">
+      <view class="history-item" wx:for="{{purchaseHistory}}" wx:key="orderId">
+        <view class="history-info">
+          <text class="history-title">{{item.packageName}} ({{item.points}}积分)</text>
+          <text class="history-time">{{formatDate(item.purchaseTime)}}</text>
+        </view>
+        <text class="history-price">¥{{item.price}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 积分消耗 -->
+  <view class="tab-content" wx:if="{{currentTab === 2}}">
+    <view wx:if="{{loadingHistory}}" class="loading-container">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <view wx:elif="{{consumptionHistory.length === 0}}" class="empty-container">
+      <image class="empty-icon" src="/assets/icons/empty-history.png" mode="aspectFit"></image>
+      <text class="empty-text">暂无消费记录</text>
+    </view>
+    
+    <view wx:else class="history-list">
+      <view class="history-item" wx:for="{{consumptionHistory}}" wx:key="index">
+        <view class="history-info">
+          <text class="history-title">{{item.title}}</text>
+          <text class="history-time">{{item.time}}</text>
+        </view>
+        <text class="history-price consumption">-{{item.points}}分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 订单确认模态框 -->
+  <view class="modal-container" wx:if="{{showOrderConfirm}}">
+    <view class="modal-mask" bindtap="closeOrderConfirm"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">确认订单</text>
+        <view class="modal-close" bindtap="closeOrderConfirm">×</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="order-info">
+          <view class="order-item">
+            <text class="order-label">套餐详情</text>
+            <text class="order-value">{{selectedPackage.points}}积分 = ¥{{selectedPackage.price}}</text>
+          </view>
+          
+          <view class="order-item">
+            <text class="order-label">积分有效期</text>
+            <text class="order-value">{{expiryDate}}</text>
+          </view>
+          
+          <view class="order-item">
+            <text class="order-label">支付方式</text>
+            <view class="payment-method">
+              <image class="payment-icon" src="/assets/icons/wechat-pay.png" mode="aspectFit"></image>
+              <text class="payment-text">微信支付</text>
+            </view>
+          </view>
+          
+          <view class="order-disclaimer">
+            <text class="disclaimer-text">虚拟商品不支持退款，请确认套餐内容</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button 
+          class="modal-btn cancel-btn" 
+          bindtap="closeOrderConfirm"
+          disabled="{{paymentLoading}}">
+          取消
+        </button>
+        <button 
+          class="modal-btn confirm-btn {{paymentLoading ? 'disabled' : ''}}" 
+          bindtap="initiatePayment"
+          disabled="{{paymentLoading}}">
+          {{paymentLoading ? '处理中...' : '立即支付'}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 支付成功模态框 -->
+  <view class="modal-container" wx:if="{{showPaymentSuccess}}">
+    <view class="modal-mask"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">支付成功</text>
+        <view class="modal-close" bindtap="closePaymentSuccess">×</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="success-info">
+          <image class="success-icon" src="/assets/icons/success.png" mode="aspectFit"></image>
+          <text class="success-text">您已成功购买{{paymentResult.package.points}}积分</text>
+          
+          <view class="success-detail">
+            <view class="detail-item">
+              <text class="detail-label">当前积分</text>
+              <text class="detail-value">{{paymentResult.points}}</text>
+            </view>
+            
+            <view class="detail-item">
+              <text class="detail-label">有效期至</text>
+              <text class="detail-value">{{paymentResult.expiryDate}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn confirm-btn" bindtap="navigateToIndex">
+          立即使用
+        </button>
+      </view>
+    </view>
+  </view>
+</view>
