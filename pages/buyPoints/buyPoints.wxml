@@ -1,7 +1,7 @@
 <!-- pages/buyPoints/buyPoints.wxml -->
 <view class="page-container">
   <!-- 吸顶状态栏 -->
-  <view class="status-bar" style="padding-top: {{statusBarHeight}}px;">
+  <view class="status-bar" style="padding-top: {{statusBarHeight + 100}}rpx;">
     <view class="status-info">
       <view class="status-item">
         <text class="status-label">可用积分</text>
@@ -9,7 +9,9 @@
       </view>
       <view class="status-item">
         <text class="status-label">有效期至</text>
-        <text class="status-value date">{{expiryDate}}</text>
+        <!-- <text class="status-value date">{{expiryDate}}</text> -->
+        <text class="status-value date">2099/12/31</text>
+
       </view>
     </view>
     <view class="ad-btn disabled" bindtap="showAdPointsHint">
@@ -19,17 +21,18 @@
   </view>
 
   <!-- 标签页切换 -->
-  <view class="tab-container">
-    <view 
-      wx:for="{{tabs}}" 
-      wx:key="index" 
-      class="tab-item {{currentTab === index ? 'active' : ''}}"
-      data-index="{{index}}"
-      bindtap="switchTab">
-      <text class="tab-text">{{item}}</text>
-      <view class="tab-indicator" wx:if="{{currentTab === index}}"></view>
-    </view>
+  <!-- 标签页切换 -->
+<view class="tab-container">
+  <view 
+    wx:for="{{tabs}}" 
+    wx:key="index" 
+    class="tab-item {{currentTab === index ? 'active' : ''}}"
+    data-index="{{index}}"
+    bindtap="switchTab">
+    <text class="tab-text">{{item}}</text>
+    <view class="tab-indicator" wx:if="{{currentTab === index}}"></view>
   </view>
+</view>
 
   <!-- 推荐套餐 -->
   <view class="tab-content" wx:if="{{currentTab === 0}}">

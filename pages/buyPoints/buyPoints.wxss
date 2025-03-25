@@ -75,10 +75,10 @@
 .tab-container {
   display: flex;
   background-color: #fff;
-  margin-top: calc(84rpx + env(safe-area-inset-top));
+  margin-top: calc(250rpx + env(safe-area-inset-top));
+  padding: 0 30rpx;
   border-bottom: 1rpx solid #f0f0f0;
-  position: sticky;
-  top: calc(84rpx + env(safe-area-inset-top));
+  position: relative;
   z-index: 10;
 }
 
@@ -92,9 +92,10 @@
 }
 
 .tab-text {
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #666;
   transition: color 0.3s;
+  font-weight: 400;
 }
 
 .tab-item.active .tab-text {
@@ -105,7 +106,7 @@
 .tab-indicator {
   position: absolute;
   bottom: 0;
-  width: 40rpx;
+  width: 64rpx;
   height: 6rpx;
   background-color: #26ECD2;
   border-radius: 3rpx;
@@ -115,6 +116,7 @@
 .tab-content {
   padding: 30rpx;
   box-sizing: border-box;
+  /* margin-top: 15rpx; */
 }
 
 /* 加载中和空状态 */
