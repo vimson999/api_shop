@@ -39,28 +39,12 @@ Page({
       console.error('获取系统信息失败:', e);
     }
     
-    // 检查头像资源是否存在
-    wx.getFileSystemManager().access({
-      path: '/assets/images/avatar.png',
-      success: () => {
-        console.log('头像资源存在');
-      },
-      fail: (err) => {
-        console.error('头像资源不存在:', err);
-        // 如果头像资源不存在，使用默认头像
-        this.setData({
-          'userInfo.avatarUrl': '/assets/images/default-avatar.png'
-        });
-      }
-    });
-    
     // 如果有登录信息则更新用户信息
-    if (app.globalData.isLoggedIn) {
+    if (app.globalData.isLoggedIn && app.globalData.userInfo) {
       this.setData({
         userInfo: {
-          ...this.data.userInfo,
-          nickName: app.globalData.userInfo?.nickName || this.data.userInfo.nickName,
-          avatarUrl: app.globalData.userInfo?.avatarUrl || '/assets/images/default-avatar.png'
+          nickName: app.globalData.userInfo.nickName || this.data.userInfo.nickName,
+          avatarUrl: app.globalData.userInfo.avatarUrl || '/assets/images/default-avatar.png'
         },
         points: app.globalData.points || this.data.points,
         keyCount: app.globalData.mockApiKeys?.length || this.data.keyCount
@@ -73,12 +57,11 @@ Page({
     auth.checkOnShow(this);
     
     // 如果有登录信息则刷新用户信息
-    if (app.globalData.isLoggedIn) {
+    if (app.globalData.isLoggedIn && app.globalData.userInfo) {
       this.setData({
         userInfo: {
-          ...this.data.userInfo,
-          nickName: app.globalData.userInfo?.nickName || this.data.userInfo.nickName,
-          avatarUrl: app.globalData.userInfo?.avatarUrl || '/assets/images/default-avatar.png'
+          nickName: app.globalData.userInfo.nickName || this.data.userInfo.nickName,
+          avatarUrl: app.globalData.userInfo.avatarUrl || '/assets/images/default-avatar.png'
         },
         points: app.globalData.points || this.data.points,
         keyCount: app.globalData.mockApiKeys?.length || this.data.keyCount

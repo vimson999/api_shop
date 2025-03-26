@@ -1,3 +1,4 @@
+// utils/request.js
 const app = getApp();
 
 // 封装请求方法
@@ -62,10 +63,49 @@ const request = (url, method, data, showLoading = true) => {
   });
 };
 
-// 导出常用请求方法
+// 常用的登录接口
+const loginWithWechat = (code, userInfo) => {
+  return request('/user/wechat-login', 'POST', {
+    code: code,
+    userInfo: userInfo
+  }, true);
+};
+
+// 获取用户信息接口
+const getUserInfo = () => {
+  return request('/user/info', 'GET', {}, true);
+};
+
+// 获取积分消耗记录
+const getPointsConsumption = (page = 1, pageSize = 10) => {
+  return request('/points/consumption', 'GET', {
+    page: page,
+    pageSize: pageSize
+  }, true);
+};
+
+// 获取系统公告
+const getSystemNotices = () => {
+  return request('/system/notices', 'GET', {}, true);
+};
+
+// 获取API服务状态
+const getApiStatus = () => {
+  return request('/system/api-status', 'GET', {}, false);
+};
+
+// 导出所有API方法
 module.exports = {
+  // 基础请求方法
   get: (url, data, showLoading) => request(url, 'GET', data, showLoading),
   post: (url, data, showLoading) => request(url, 'POST', data, showLoading),
   put: (url, data, showLoading) => request(url, 'PUT', data, showLoading),
-  delete: (url, data, showLoading) => request(url, 'DELETE', data, showLoading)
+  delete: (url, data, showLoading) => request(url, 'DELETE', data, showLoading),
+  
+  // 业务接口封装
+  loginWithWechat,
+  getUserInfo,
+  getPointsConsumption,
+  getSystemNotices,
+  getApiStatus
 };
